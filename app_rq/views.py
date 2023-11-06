@@ -12,7 +12,6 @@ mongo_uri = mongodb_connection
 database_name = database_name
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
 def Topicsdata(request, topic_name):
     try:
         # Establish a connection to MongoDB
@@ -39,7 +38,6 @@ def Topicsdata(request, topic_name):
         return JsonResponse({"error": str(e)}, status=500)
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
 def Authorsdata(request, author_name):
     try:
         # Establish a connection to MongoDB
@@ -65,7 +63,6 @@ def Authorsdata(request, author_name):
         return JsonResponse({"error": str(e)}, status=500)
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
 def Collectionsdata(request, collection_name):
     try:
         # Establish a connection to MongoDB
@@ -92,28 +89,24 @@ def Collectionsdata(request, collection_name):
         return JsonResponse({"error": str(e)}, status=500)
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
 def topics(request):
     topics = Topics.objects.all()
     serializer = TopicSerializer(topics, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
 def authors(request):
     authors = Authors.objects.all()
     serializer = AuthorSerializer(authors, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
 def collections(request):
     collections = Collections.objects.all()
     serializer = CollectionSerializer(collections, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
 def Home(request):
     quotes = list(Quote.objects.values('author', 'quote','image_url'))
     featured_data = Featured.objects.values('featured').first()  
@@ -133,7 +126,6 @@ def Home(request):
     }
     return JsonResponse(response_data, safe=False)
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
 def quote(request):
     quotes = Quote.objects.all()
     quotes_list = list(quotes)  
